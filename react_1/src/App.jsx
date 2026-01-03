@@ -19,7 +19,12 @@ const App = () => {
     setemail(e.target.value)
   }
 
-  
+  const handleDelete = (idx) => {
+    const copy = [...prevarr];      // copy array
+    copy.splice(idx, 1);            // remove element at idx
+    setprevarr(copy);               // update state
+  }
+
 
   return (
     <div className='h-screen w-screen bg-black flex justify-between py-10 px-25 items-center' >
@@ -44,7 +49,7 @@ const App = () => {
       </form>
       <div className='contacts h-full min-h-full max-h-full overflow-y-auto no-scrollbar w-[50vw] border border-white rounded-2xl p-3 flex gap-2 flex-col '>
        {prevarr.map((elem,idx)=>{
-        return <Cards name={elem.name} email={elem.email} key={idx}/>
+        return <Cards name={elem.name} email={elem.email} idx={idx}  onDelete={handleDelete} />
        })}
       </div>
     </div>
