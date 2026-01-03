@@ -2,13 +2,20 @@ import React, { useState } from 'react'
 import Cards from './components/Cards';
 
 const App = () => {
-    const [prevarr, setprevarr] = useState([])
+   const localdata=JSON.parse(localStorage.getItem('all-users'))||[]
+    //at first we have to convert this object in strig completely so that it can stored in the localstorage fully
+    
+    const [prevarr, setprevarr] = useState(localdata)
    const [name, setname] = useState('')
    const [email, setemail] = useState('')
   const submitHandle=(e)=>{
     e.preventDefault();
-    setprevarr([...prevarr,{name,email}])
-   console.log(prevarr)
+    var newarr=[...prevarr]
+    newarr.push({name,email})
+    setprevarr(newarr)
+
+    localStorage.setItem('all-users', JSON.stringify(prevarr));
+  
    setname('')
    setemail('')
   }
@@ -22,7 +29,9 @@ const App = () => {
   const handleDelete = (idx) => {
     const copy = [...prevarr];      // copy array
     copy.splice(idx, 1);            // remove element at idx
-    setprevarr(copy);               // update state
+    setprevarr(copy);   
+                // update state
+                localStorage.setItem('all-users', JSON.stringify(copy)); //update the storage with updated array
   }
 
 
